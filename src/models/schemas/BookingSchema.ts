@@ -19,8 +19,8 @@ resource_id: {
 type: "int",
 },
 
-booked_by: {
-type: String,
+user_id: {
+type: "int",
 },
 
 start_time: {

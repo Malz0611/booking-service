@@ -10,37 +10,22 @@ export class ResourceService extends BaseService<ResourceEntity> {
   async createResource(data: CreateResourceForm): Promise<ResourceEntity> {
     return await this.create(data);
   }
-  async blockResource(id: number) : Promise<ResourceEntity | null> {
-  await this.updateById(id, {
-      blocked: true,
-    }
-  );
 
-  return  this.repository.findOneBy({ id });
-}
-
-
-async unblockResource(id: number) {
-  await this.repository.update(
-    id,
-    {
-      blocked: false,
-    }
-  );
-
-  return this.repository.findOneBy({ id });
-}
-}
-
-  async blockResource(id: number) {
+  async blockResource(id: number): Promise<ResourceEntity | null> {
     return await this.updateById(id, { blocked: true });
   }
 
-  async unblockResource(id: number) {
+  async unblockResource(id: number): Promise<ResourceEntity | null> {
     return await this.updateById(id, { blocked: false });
   }
 
-  async setAvailability(id: number, data: { open_time: string; close_time: string }) {
-    return await this.updateById(id, data);
+  async setAvailability(
+    id: number,
+    data: {
+      open_time: string;
+      close_time: string;
+    }
+  ) {
+    return await this.updateById(id, data as Partial<ResourceEntity>);
   }
 }

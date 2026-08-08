@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { AppDataSource } from "./data-source";
 import { resourceRoutes } from "./routes/resource";
 import { bookingRoutes } from "./routes/booking";
-
+import { authRoutes } from "./routes/auth";
 // Merge in bookingRoutes / availabilityRoutes here as those features land.
 const routes = {
   "/health": {
@@ -10,6 +10,7 @@ const routes = {
   },
   ...resourceRoutes,
   ...bookingRoutes,
+  ...authRoutes
 };
 
 AppDataSource.initialize()
