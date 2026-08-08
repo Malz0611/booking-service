@@ -18,7 +18,7 @@ export const AppDataSource = new DataSource({
     ResourceSchema,
     BookingSchema, 
     UserSchema
-  ],
+],
   subscribers: [],
   migrations: ["src/database/migrations/*.ts"],
 });

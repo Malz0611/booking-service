@@ -2,6 +2,7 @@ import { BaseService } from "./BaseService";
 import { ResourceSchema } from "../models/schemas";
 import type { ResourceEntity, CreateResourceForm } from "../forms/resource";
 
+
 export class ResourceService extends BaseService<ResourceEntity> {
   constructor() {
     super(ResourceSchema);

@@ -22,11 +22,9 @@ export const ResourceSchema = new EntitySchema<ResourceEntity>({
       type: "int",
     },
     blocked: {
-      type: "boolean",
+      type: Boolean,
       default: false,
-  },
-    
-    
+    },
     open_time: {
       type: String,
       nullable: true,

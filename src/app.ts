@@ -4,6 +4,9 @@ import { resourceRoutes } from "./routes/resource";
 import { bookingRoutes } from "./routes/booking";
 import { authRoutes } from "./routes/auth";
 // Merge in bookingRoutes / availabilityRoutes here as those features land.
+import { AvailabilityRoutes } from "./routes/availability";
+import { bookingHistoryRoutes } from "./routes/bookingHistory";
+
 const routes = {
   "/health": {
     GET: () => Response.json({ status: "ok" }, { status: 200 }),
@@ -11,6 +14,8 @@ const routes = {
   ...resourceRoutes,
   ...bookingRoutes,
   ...authRoutes
+  ...AvailabilityRoutes,
+  ...bookingHistoryRoutes,
 };
 
 AppDataSource.initialize()
@@ -26,5 +31,4 @@ AppDataSource.initialize()
     console.log(`booking-service running at http://localhost:${server.port}`);
   })
   .catch((error) => {
-    console.error("Failed to initialize database connection:", error);
-  });
+    console.error("Failed to initialize database connection:", error);});

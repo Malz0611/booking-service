@@ -2,6 +2,7 @@ import type { BookingEntity, CreateBookingForm } from "../forms/booking";
 import { BookingSchema, ResourceSchema } from "../models/schemas";
 import { AppDataSource } from "../data-source";
 import { BaseService } from "./BaseService";
+import { isCancellationAllowed } from "./cancellationPolicyService";
 
 export class BookingService extends BaseService<BookingEntity> {
     resourceRepository: any;
@@ -130,6 +131,14 @@ async createBooking(data: CreateBookingForm, userId: number): Promise<BookingEnt
       throw new Error("Booking is already cancelled.");
 
     }
+
+
+  // Feature 3 addition — cancellation policy check (2h minimum notice).
+  // Flag for review with feature2 owner before merge.
+  const policyCheck = isCancellationAllowed(booking.start_time);
+  if (!policyCheck.allowed) {
+    throw new Error(policyCheck.reason);
+  }
 
     return await this.updateById(id, {
 
