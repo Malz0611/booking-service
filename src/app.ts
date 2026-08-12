@@ -13,7 +13,7 @@ const routes = {
   },
   ...resourceRoutes,
   ...bookingRoutes,
-  ...authRoutes
+  ...authRoutes,
   ...AvailabilityRoutes,
   ...bookingHistoryRoutes,
 };
