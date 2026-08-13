@@ -5,12 +5,12 @@ const { Table } = pkg;
 
 export class CreateBookings20260731000002 implements MigrationInterface {
 public async up(queryRunner: QueryRunner): Promise<void> {
-const tableExists = await queryRunner.hasTable("bookings");
+const tableExists = await queryRunner.hasTable("booking_service.bookings");
 if (tableExists) return;
 
 await queryRunner.createTable(
 new Table({
-name: "bookings",
+name: "booking_service.bookings",
 columns: [
 {
 name: "id",
@@ -60,7 +60,7 @@ default: "CURRENT_TIMESTAMP",
 foreignKeys: [
 {
 columnNames: ["resource_id"],
-referencedTableName: "resources",
+referencedTableName: "booking_service.resources",
 referencedColumnNames: ["id"],
 onDelete: "CASCADE",
 },
@@ -70,6 +70,6 @@ onDelete: "CASCADE",
 }
 
 public async down(queryRunner: QueryRunner): Promise<void> {
-await queryRunner.dropTable("bookings");
+await queryRunner.dropTable("booking_service.bookings");
 }
 }

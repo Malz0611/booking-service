@@ -34,12 +34,18 @@ export class AuthController {
         201
       );
     } catch (error) {
-    
-      return HttpResponse.failure(
-        error instanceof Error ? error.message : "Something went wrong",
-        409
-      );
-    }
+  if (error instanceof Error && error.message === "Email already exists.") {
+    return HttpResponse.failure(
+      error.message,
+      409
+    );
+  }
+
+  return HttpResponse.failure(
+    error instanceof Error ? error.message : "Something went wrong",
+    500
+  );
+}
   }
 
 
@@ -56,7 +62,7 @@ async signin(req: Request): Promise<Response> {
     if (!validPassword) {
       return HttpResponse.failure("Invalid email or password.", 401);
     }
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!,
+    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET!,
       { expiresIn: "1h" }
     );
     return HttpResponse.success("Signin successful.", { token }, 200);

@@ -11,7 +11,13 @@ export const bookingRoutes = {
 "/bookings": {
 // GET /bookings
 GET: (req: BunRequest<"/bookings">) => {
-return controller.list(req);
+  const auth = authenticate(req as AuthRequest);
+
+  if (auth) {
+    return auth;
+  }
+
+  return controller.list(req);
 },
 
 // POST /bookings

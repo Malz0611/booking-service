@@ -6,14 +6,57 @@ const controller = new ResourceController();
 
 export const resourceRoutes = {
   "/resources": {
-    GET: () => controller.list(),
-    POST: (req: Request) => controller.create(req),
+    GET: (req: Request) => {
+      const auth = authenticate(req as AuthRequest);
+
+      if (auth) {
+        return auth;
+      }
+
+      return controller.list();
+    },
+
+    POST: (req: Request) => {
+      const auth = authenticate(req as AuthRequest);
+
+      if (auth) {
+        return auth;
+      }
+
+      return controller.create(req);
+    },
   },
 
   "/resources/:id": {
-    GET: (req: BunRequest<"/resources/:id">) => controller.getById(req),
-    PUT: (req: BunRequest<"/resources/:id">) => controller.update(req),
-    DELETE: (req: BunRequest<"/resources/:id">) => controller.delete(req),
+    GET: (req: BunRequest<"/resources/:id">) => {
+      const auth = authenticate(req as AuthRequest);
+
+      if (auth) {
+        return auth;
+      }
+
+      return controller.getById(req);
+    },
+
+    PUT: (req: BunRequest<"/resources/:id">) => {
+      const auth = authenticate(req as AuthRequest);
+
+      if (auth) {
+        return auth;
+      }
+
+      return controller.update(req);
+    },
+
+    DELETE: (req: BunRequest<"/resources/:id">) => {
+      const auth = authenticate(req as AuthRequest);
+
+      if (auth) {
+        return auth;
+      }
+
+      return controller.delete(req);
+    },
   },
 
   "/resources/:id/block": {
@@ -41,7 +84,14 @@ export const resourceRoutes = {
   },
 
   "/resources/:id/availability": {
-    POST: (req: BunRequest<"/resources/:id/availability">) =>
-      controller.setAvailability(req),
+    POST: (req: BunRequest<"/resources/:id/availability">) => {
+      const auth = authenticate(req as AuthRequest);
+
+      if (auth) {
+        return auth;
+      }
+
+      return controller.setAvailability(req);
+    },
   },
 };
