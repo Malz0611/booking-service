@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { AppDataSource } from "./data-source";
 import { resourceRoutes } from "./routes/resource";
 import { bookingRoutes } from "./routes/booking";
+import { authRoutes } from "./routes/auth";
+// Merge in bookingRoutes / availabilityRoutes here as those features land.
 import { AvailabilityRoutes } from "./routes/availability";
 import { bookingHistoryRoutes } from "./routes/bookingHistory";
 
@@ -11,6 +13,7 @@ const routes = {
   },
   ...resourceRoutes,
   ...bookingRoutes,
+  ...authRoutes,
   ...AvailabilityRoutes,
   ...bookingHistoryRoutes,
 };

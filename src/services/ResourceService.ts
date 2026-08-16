@@ -12,15 +12,21 @@ export class ResourceService extends BaseService<ResourceEntity> {
     return await this.create(data);
   }
 
-  async blockResource(id: number) {
+  async blockResource(id: number): Promise<ResourceEntity | null> {
     return await this.updateById(id, { blocked: true });
   }
 
-  async unblockResource(id: number) {
+  async unblockResource(id: number): Promise<ResourceEntity | null> {
     return await this.updateById(id, { blocked: false });
   }
 
-  async setAvailability(id: number, data: { open_time: string; close_time: string }) {
-    return await this.updateById(id, data);
+  async setAvailability(
+    id: number,
+    data: {
+      open_time: string;
+      close_time: string;
+    }
+  ) {
+    return await this.updateById(id, data as Partial<ResourceEntity>);
   }
 }

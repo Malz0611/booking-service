@@ -1,20 +1,60 @@
 import type { BunRequest } from "bun";
 import { BookingController } from "../controllers/BookingController";
+import {
+authenticate,
+type AuthRequest,
+} from "../middleware/auth";
 
 const controller = new BookingController();
 
 export const bookingRoutes = {
-  "/bookings": {
-    GET: (req: BunRequest<"/bookings">) => controller.list(req),
-    POST: (req: Request) => controller.create(req),
-  },
+"/bookings": {
+// GET /bookings
+GET: (req: BunRequest<"/bookings">) => {
+  const auth = authenticate(req as AuthRequest);
 
-  "/bookings/:id": {
-    PUT: (req: BunRequest<"/bookings/:id">) => controller.update(req),
-  },
+  if (auth) {
+    return auth;
+  }
 
-  "/bookings/:id/cancel": {
-    PATCH: (req: BunRequest<"/bookings/:id/cancel">) =>
-      controller.cancel(req),
-  },
+  return controller.list(req);
+},
+
+// POST /bookings
+POST: (req: Request) => {
+const auth = authenticate(req as AuthRequest);
+
+if (auth) {
+return auth;
+}
+
+return controller.create(req as AuthRequest);
+},
+},
+
+// PUT /bookings/:id
+"/bookings/:id": {
+PUT: (req: Request) => {
+const auth = authenticate(req as AuthRequest);
+
+if (auth) {
+return auth;
+}
+
+return controller.update(req as AuthRequest);
+},
+},
+
+// PATCH /bookings/:id/cancel
+"/bookings/:id/cancel": {
+PATCH: (req: Request) => {
+const auth = authenticate(req as AuthRequest);
+
+if (auth) {
+return auth;
+}
+
+return controller.cancel(req as AuthRequest);
+},
+},
 };
